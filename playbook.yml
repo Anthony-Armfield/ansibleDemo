@@ -1,0 +1,8 @@
+- name: Test Playbook
+  hosts: managed_nodes
+  become: yes
+  tasks:
+  - name: Install Nginx
+    apt:
+      name: nginx
+      state: present
