@@ -1,0 +1,16 @@
+- name: Enable and Start SSH Service
+  ansible.builtin.systemd:
+    name: ssh
+    enabled: true
+    state: started
+
+- name: Configure SSH for SFTP
+  ansible.builtin.blockinfile:
+    path: /etc/ssh/sshd_config
+    block: |
+      Match Group sftp_users
+          ForceCommand internal-sftp
+          X11Forwarding no
+          AllowTcpForwarding no
+          PasswordAuthentication yes
+    state: present

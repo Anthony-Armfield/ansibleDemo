@@ -1,0 +1,16 @@
+- name: Ensure SFTP Base Directory Exists
+  ansible.builtin.file:
+    path: /sftp_data
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Include task to create SFTP group
+  ansible.builtin.import_tasks: create_group.yml
+
+- name: Include task to add SFTP users
+  ansible.builtin.import_tasks: add_users.yml
+
+- name: Include task to set SFTP user permissions
+  ansible.builtin.import_tasks: set_permissions.yml
