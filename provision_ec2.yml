@@ -1,0 +1,37 @@
+- name: Privision Ubuntu EC2 Instance
+  hosts: localhost
+  gather_facts: no
+  tasks:
+
+    - name: Launch an EC2 instance
+      amazon.aws.ec2_instance:
+        name: "SFTP-Server"
+        key_name: "{{ aws_sftp_key }}"
+        instance_type: "t2.micro"
+        security_group: "{{ aws_sftp_security_group }}"
+        image_id: "{{ aws_ami }}"
+        region: "{{ aws_sftp_server_region }}"
+        count: 1
+        network:
+          assign_public_ip: true
+        tags:
+          Name: "SFTP-Server"
+          Environment: "Demo"
+      register: ec2_result
+
+    - name: Wait for instance to be accessible
+      wait_for:
+        host: "{{ ec2_result.isntances[0].public_ip_address }}"
+        port: 22
+        delay: 30
+        timeout: 300
+
+    - name: Add new isntance to Ansible inventory
+      add_host:
+        name: "{{ ec2_result.instances[0].public_ip_address }}"
+        groups: sftp_server
+        ansible_user: ubuntu
+
+    - name: Display instance details
+      debug:
+        msg: "EC2 instance is running at {{ ec2_result.instances[0].public_ip_address }}"

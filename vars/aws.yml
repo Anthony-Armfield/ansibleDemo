@@ -1,0 +1,4 @@
+aws_sftp_server_region: "us-west-2"
+# aws_sftp_key: ""      Need to get the key
+aws_sftp_security_group: 
+# aws_ami: ""     Need to get the AMI here
