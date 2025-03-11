@@ -28,6 +28,7 @@ __pycache__/
 # Clients lists
 clients.csv
 clients.json
+users.json
 
 # Python virtual environment
 venv/

@@ -1,0 +1,23 @@
+- name: Create SFTP Read-Only Users
+  ansible.builtin.user:
+    name: "{{ item.username }}"
+    comment: "{{ item.full_name }}"
+    group: sftp_users
+    home: "/sftp_data/{{ item.username }}"
+    shell: /usr/sbin/nologin
+  loop: "{{ sftp_users }}"
+
+- name: Create SFTP Read-Write Users
+  ansible.builtin.user:
+    name: "{{ item.username }}"
+    comment: "{{ item.full_name }}"
+    groups: sftp_admins
+    home: "/sftp_data/admins/"
+    shell: /usr/sbin/nologin
+  loop: "{{ sftp_admins }}"
+
+- name: Set default password for SFTP users
+  ansible.builtin.user:
+    name: "{{ item.username }}"
+    password: "{{ 'ChangeMe123!' | password_hash('sha512') }}"
+  loop: "{{ sftp_users + sftp_admins }}"

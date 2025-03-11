@@ -1,0 +1,10 @@
+- name: Restart SSH
+  ansible.builtin.service:
+    name: ssh
+    state: restarted
+
+- name: Include task to install and set up OpenSSH
+  ansible.builtin.import_tasks: install_packages.yml
+
+- name: Include task to harden the SSH security
+  ansible.builtin.import_tasks: harden_ssh.yml

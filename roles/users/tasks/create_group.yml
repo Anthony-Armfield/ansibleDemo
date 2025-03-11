@@ -1,0 +1,9 @@
+- name: Create SFTP Read-Only Group
+  ansible.builtin.group:
+    name: sftp_users
+    state: present
+
+- name: Create SFTP Read-Write Group
+  ansible.builtin.group:
+    name: sftp_admins
+    state: present

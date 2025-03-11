@@ -1,0 +1,25 @@
+- name: Ensure Directories Exist
+  ansible.builtin.file:
+    path: "/sftp_data"
+    state: directory
+    owner: root
+    group: root
+    mode: '0775' # Read & Write for admins only
+
+- name: Set Directory Permissions for SFTP Read-Only Users
+  ansible.builtin.file:
+    path: "/sftp_data/{{ item.username }}"
+    state: directory
+    owner: "{{ item.username }}"
+    group: sftp_users
+    mode: '0700'  # Read-only for SFTP Users
+  loop: "{{ sftp_users }}"
+
+- name: Set Directory Permissions for SFTP Admins (Read-Write)
+  ansible.builtin.file:
+    path: "/sftp_data/admins"
+    state: directory
+    owner: root
+    group: sftp_admins
+    mode: '0755'  # Read & Write for admins only
+  loop: "{{ sftp_admins }}"
