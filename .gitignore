@@ -4,6 +4,7 @@ inventory.ini
 
 # Secrets
 vars/users.yml
+vars/aws.yml
 group_vars/all.yml
 secret.yml
 vault_pass.txt
