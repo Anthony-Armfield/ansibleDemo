@@ -1,1 +1,29 @@
+# Ansible Config Files
+ansible.cfg
 inventory.ini
+
+# Secrets
+vars/users.yml
+group_vars/all.yml
+secret.yml
+vault_pass.txt
+
+# SSH Keys
+*.pem
+*.pub
+.ssh/
+
+# Logs, cache, and temporary files
+*.retry
+*.log
+*.swp
+*.bak
+.cache/
+__pycache__/
+
+# Clients lists
+clients.csv
+clients.json
+
+# Python virtual environment
+venv/
